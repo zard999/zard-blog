@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Blog';
+const description = 'Latest articles.';
+const permalink = `${Astro.site.href}blog`;
+
+// 本地获取
+// let allPosts = await Astro.glob('../../data/blog-posts/*.md');
+// 接口获取
+const fetchPosts = await fetch('http://localhost:1337/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
+// allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="blog">
+  <div class="container">
+    <h1>Blog</h1>
+    {
+      fetchPosts.data.map((post, index) => {
+        const href = `/blog/${post.attributes.slug}`;
+        return (
+          <div>
+            {index !== 0 && <hr />}
+            <div class="post-item">
+              <div style="display: flex;">
+                <div class="left">
+                  <img width="400" src={'http://localhost:1337' + post.attributes.cover.data[0].attributes.url} alt="" />
+                </div>
+                <div class="right">
+                  <h2>
+                    <a href={href}>{post.attributes.title}</a>
+                  </h2>
+                  <p>{post.attributes.excerpt}</p>
+                  <div class="post-item-footer">
+                    <span class="post-item-date">
+                      — {post.attributes.publishedAt}— {post.attributes.categories.data.map(category => category.attributes.name + ' ')}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  h2,
+  .post-item-footer {
+    font-family: var(--font-family-sans);
+    font-weight: 700;
+  }
+
+  .post-item-date {
+    color: var(--text-secondary);
+    text-align: left;
+    text-transform: uppercase;
+    margin-right: 16px;
+  }
+
+  hr {
+    margin: 60px auto;
+  }
+</style>

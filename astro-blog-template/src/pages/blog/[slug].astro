@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Bio from '../../components/Bio.astro';
+import { markdown } from '@astropub/md';
+
+export async function getStaticPaths() {
+  // 本地获取
+  // const posts = await Astro.glob('../../data/blog-posts/*.md');
+  // 网络获取
+  const fetchPosts = await fetch('http://localhost:1337/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
+
+  // 这里 return 的东西，可以在下面接收到
+  return fetchPosts.data.map(post => ({
+    params: { slug: post.attributes.slug },
+    props: { post }
+  }));
+}
+
+const { title, content, slug, excerpt, publishedAt } = Astro.props.post.attributes; // 这里对应 getStaticPaths 中的 return
+const permalink = `${Astro.site.href}${slug}`;
+---
+
+<BaseLayout title={title} description={excerpt} permalink={permalink} current="blog">
+  <header>
+    <p>{publishedAt}</p>
+    <h1>{title}</h1>
+    <hr />
+  </header>
+  <div class="container">
+    <article class="content">
+      {async () => await markdown(content)}
+    </article>
+    <hr />
+    <Bio />
+  </div>
+</BaseLayout>
+
+<style>
+  header {
+    text-align: center;
+  }
+
+  header h1 {
+    margin-bottom: 0.7em;
+  }
+
+  header p {
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+  }
+
+  header hr {
+    min-width: 100px;
+    width: 30%;
+  }
+</style>

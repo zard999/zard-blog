@@ -38,7 +38,7 @@
     "visibility": {
       "type": "boolean"
     },
-    "categorys": {
+    "categories": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::category.category",

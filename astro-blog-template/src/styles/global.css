@@ -2,16 +2,16 @@
   --background-body: #fff;
   --text-main: #36393b;
   --text-secondary: #6b6f72;
-  --primary-color: #548e9b;
+  --primary-color: #2BBC8A;
   --font-family-serif: Merriweather, serif;
   --font-family-sans: 'Fira Sans', sans-serif;
 }
 
 :root.theme-dark {
   --background-body: #202122;
-  --text-main: #fff;
-  --text-secondary: #ccc;
-  --primary-color: #548e9b;
+  --text-main: #C9CACC;
+  --text-secondary: #666;
+  --primary-color: #2BBC8A;
 }
 
 *,
@@ -43,8 +43,9 @@ h6 {
 
 h1 {
   font-family: var(--font-family-serif);
-  font-size: 4em;
+  font-size: 2em;
   margin: 0 0 1em 0;
+  color: var(--primary-color);
 }
 
 h2 {
@@ -198,7 +199,7 @@ td {
 }
 
 .content h1 {
-  font-size: 3em;
+  font-size: 2em;
   margin: 1em 0;
 }
 
@@ -246,11 +247,11 @@ input[name='theme-toggle'] {
 
 @media (max-width: 1020px) {
   h1 {
-    font-size: 3em;
+    font-size: 2em;
   }
 
   .content h1 {
-    font-size: 2.4em;
+    font-size: 1.5em;
   }
 }
 

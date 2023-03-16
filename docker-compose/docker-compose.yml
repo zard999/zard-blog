@@ -1,0 +1,18 @@
+version: '1'
+services:
+  server_blog_strapi:
+    image: registry.cn-shenzhen.aliyuncs.com/zard999/server_blog_strapi
+    container_name: server_blog_strapi
+    restart: always
+    ports:
+      - 9003:1337
+    expose:
+      - 9003
+  astro-blog:
+    image: registry.cn-shenzhen.aliyuncs.com/zard999/astro-blog
+    container_name: astro-blog
+    restart: always
+    ports:
+      - 9002:9002
+    expose:
+      - 9002

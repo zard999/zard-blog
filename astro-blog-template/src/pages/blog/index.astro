@@ -8,7 +8,7 @@ const permalink = `${Astro.site.href}blog`;
 // 本地获取
 // let allPosts = await Astro.glob('../../data/blog-posts/*.md');
 // 接口获取
-const fetchPosts = await fetch('http://localhost:1337/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
+const fetchPosts = await fetch('http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
 // allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
 ---
 
@@ -24,7 +24,7 @@ const fetchPosts = await fetch('http://localhost:1337/api/posts?populate[0]=cate
             <div class="post-item">
               <div style="display: flex;">
                 <div class="left">
-                  <img width="400" src={'http://localhost:1337' + post.attributes.cover.data[0].attributes.url} alt="" />
+                  <img width="400" src={'http://42.192.151.130:9003' + post.attributes.cover.data[0].attributes.url} alt="" />
                 </div>
                 <div class="right">
                   <h2>

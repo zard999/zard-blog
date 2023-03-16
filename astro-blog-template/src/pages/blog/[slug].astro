@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   // 本地获取
   // const posts = await Astro.glob('../../data/blog-posts/*.md');
   // 网络获取
-  const fetchPosts = await fetch('http://localhost:1337/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
+  const fetchPosts = await fetch('http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
 
   // 这里 return 的东西，可以在下面接收到
   return fetchPosts.data.map(post => ({

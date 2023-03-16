@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const title = 'About';
 const description = 'About your blog.';
 const permalink = `${Astro.site.href}about`;
-const fetchAbouts = await fetch('http://localhost:1337/api/abouts').then(res => res.json());
+const fetchAbouts = await fetch('http://42.192.151.130:9003/api/abouts').then(res => res.json());
 console.log('fetchAbouts', fetchAbouts.data[0].attributes.content);
 ---
 
@@ -19,9 +19,6 @@ console.log('fetchAbouts', fetchAbouts.data[0].attributes.content);
 </BaseLayout>
 
 <style>
-  h1 {
-    color: red;
-  }
   @media (max-width: 1020px) {
     .about-image {
       float: none;

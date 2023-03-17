@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import moment from 'moment';
 
 const title = 'Blog';
 const description = 'Latest articles.';
@@ -9,55 +10,84 @@ const permalink = `${Astro.site.href}blog`;
 // let allPosts = await Astro.glob('../../data/blog-posts/*.md');
 // 接口获取
 const fetchPosts = await fetch('http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
+const fetchCategories = await fetch('http://42.192.151.130:9003/api/categories').then(res => res.json());
+// 按照年份分类fetchPosts
+const postsByYear = {};
+const postsByYearArr = [];
+fetchPosts.data.forEach(post => {
+  const year = moment(post.attributes.publishedAt).format('YYYY');
+  if (!postsByYear[year]) {
+    postsByYear[year] = [];
+    postsByYearArr.push(year);
+  }
+  postsByYear[year].push(post);
+});
+console.log('postsByYear', postsByYear, postsByYearArr);
 // allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
 ---
 
 <BaseLayout title={title} description={description} permalink={permalink} current="blog">
   <div class="container">
     <h1>Blog</h1>
+    <div class="categories-list">
+      {
+        fetchCategories.data.map(category => (
+          <a style={{ 'font-size': category.attributes.fontSize + 'px' }} href={`/blog/category/${category.attributes.slug}`}>
+            {category.attributes.name}
+          </a>
+        ))
+      }
+    </div>
     {
-      fetchPosts.data.map((post, index) => {
-        const href = `/blog/${post.attributes.slug}`;
-        return (
-          <div>
-            {index !== 0 && <hr />}
-            <div class="post-item">
-              <div style="display: flex;">
-                <div class="left">
-                  <img width="400" src={'http://42.192.151.130:9003' + post.attributes.cover.data[0].attributes.url} alt="" />
-                </div>
-                <div class="right">
-                  <h2>
-                    <a href={href}>{post.attributes.title}</a>
-                  </h2>
-                  <p>{post.attributes.excerpt}</p>
-                  <div class="post-item-footer">
-                    <span class="post-item-date">
-                      — {post.attributes.publishedAt}— {post.attributes.categories.data.map(category => category.attributes.name + ' ')}
-                    </span>
-                  </div>
-                </div>
+      postsByYearArr.map(year => (
+        <div class="year">
+          <h3>{year}</h3>
+          {postsByYear[year].map((post, index) => {
+            const href = `/blog/${post.attributes.slug}`;
+            return (
+              <div class="post-item">
+                <div class="post-item-date">{moment(post.attributes.publishedAt).format('YYYY-MM-DD')}</div>
+                <div><a href={href}>{post.attributes.title}</a></div>
               </div>
-            </div>
-          </div>
-        );
-      })
+            );
+          })}
+        </div>
+      ))
     }
   </div>
 </BaseLayout>
 
 <style>
+  .categories-list {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .categories-list a {
+    margin-right: 10px;
+    margin-bottom: 4px;
+    line-height: 23px;
+    white-space: nowrap;
+    background-image: none;
+    -webkit-text-size-adjust: none;
+    text-decoration: none;
+  }
+  .year {
+    margin: 20px 0;
+  }
+  .post-item {
+    display: flex;
+  }
+  .post-item .post-item-date {
+    color: var(--text-secondary);
+    margin-right: 32px;
+    text-transform: uppercase;
+  }
   h2,
   .post-item-footer {
     font-family: var(--font-family-sans);
     font-weight: 700;
-  }
-
-  .post-item-date {
-    color: var(--text-secondary);
-    text-align: left;
-    text-transform: uppercase;
-    margin-right: 16px;
   }
 
   hr {

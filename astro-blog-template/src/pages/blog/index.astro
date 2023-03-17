@@ -11,6 +11,7 @@ const permalink = `${Astro.site.href}blog`;
 // 接口获取
 const fetchPosts = await fetch('http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
 const fetchCategories = await fetch('http://42.192.151.130:9003/api/categories').then(res => res.json());
+// debugger;
 // 按照年份分类fetchPosts
 const postsByYear = {};
 const postsByYearArr = [];
@@ -32,7 +33,7 @@ console.log('postsByYear', postsByYear, postsByYearArr);
     <div class="categories-list">
       {
         fetchCategories.data.map(category => (
-          <a style={{ 'font-size': category.attributes.fontSize + 'px' }} href={`/blog/category/${category.attributes.slug}`}>
+          <a style={{ 'font-size': category.attributes.fontSize + 'px' }} href={`/category/${category.attributes.name}`}>
             {category.attributes.name}
           </a>
         ))

@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { title, content, slug, excerpt, publishedAt, cover, categories } = Astro.props.post.attributes; // 这里对应 getStaticPaths 中的 return
-const permalink = `${Astro.site.href}${slug}`;
+const permalink = `${Astro.site.href}blog/${slug}`;
 ---
 
 <BaseLayout title={title} description={excerpt} permalink={permalink} current="blog">
@@ -30,7 +30,7 @@ const permalink = `${Astro.site.href}${slug}`;
       <div class="header-tags">
         {
           categories.data.map(category => {
-            return <a href={`/categories/${category.attributes.slug}`}>{category.attributes.name}</a>;
+            return <a href={`/category/${category.attributes.name}`}>{category.attributes.name}</a>;
           })
         }
       </div>

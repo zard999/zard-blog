@@ -2,13 +2,14 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Bio from '../../components/Bio.astro';
 import { markdown } from '@astropub/md';
+import moment from 'moment';
 
 export async function getStaticPaths() {
   // 本地获取
   // const posts = await Astro.glob('../../data/blog-posts/*.md');
   // 网络获取
   const fetchPosts = await fetch('http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
-
+  // debugger;
   // 这里 return 的东西，可以在下面接收到
   return fetchPosts.data.map(post => ({
     params: { slug: post.attributes.slug },
@@ -16,15 +17,27 @@ export async function getStaticPaths() {
   }));
 }
 
-const { title, content, slug, excerpt, publishedAt } = Astro.props.post.attributes; // 这里对应 getStaticPaths 中的 return
+const { title, content, slug, excerpt, publishedAt, cover, categories } = Astro.props.post.attributes; // 这里对应 getStaticPaths 中的 return
 const permalink = `${Astro.site.href}${slug}`;
 ---
 
 <BaseLayout title={title} description={excerpt} permalink={permalink} current="blog">
   <header>
-    <p>{publishedAt}</p>
     <h1>{title}</h1>
-    <hr />
+    <div class="header-detail">
+      <div>{moment(publishedAt).format('YYYY-MM-DD')}</div>
+      {categories.data.length ? <div class="header-line"></div> : null}
+      <div class="header-tags">
+        {
+          categories.data.map(category => {
+            return <a href={`/categories/${category.attributes.slug}`}>{category.attributes.name}</a>;
+          })
+        }
+      </div>
+    </div>
+    <div class="header-image">
+      <div style={{ width: '80%', height: '30em', background: `url(http://42.192.151.130:9003${cover.data[0].attributes.url})`, 'background-size': '100% 100%', 'background-repeat': 'no-repeat' }}></div>
+    </div>
   </header>
   <div class="container">
     <article class="content">
@@ -38,6 +51,32 @@ const permalink = `${Astro.site.href}${slug}`;
 <style>
   header {
     text-align: center;
+  }
+
+  header .header-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .header-detail .header-line {
+    width: 1px;
+    height: 1em;
+    background: var(--text-secondary);
+    margin: 0 1rem;
+  }
+
+  .header-detail .header-tags a {
+    margin-right: 1rem;
+  }
+
+  header .header-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1em;
   }
 
   header h1 {

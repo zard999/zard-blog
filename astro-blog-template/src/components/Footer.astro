@@ -1,22 +1,32 @@
 <footer>
   <div class="footer-left">
-    Copyright © {new Date().getFullYear()} Zard Blog.
-    Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>.
+    Copyright © {new Date().getFullYear()} Zard Blog. Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>.
     <a href="https://www.twitter.com/Charca" target="_blank" rel="noopener">湖ICP备18045521号</a>.
   </div>
 </footer>
 
 <style>
   footer {
-    color: var(--text-secondary);
-    font-size: .8em;
-    margin: 1em auto;
-    max-width: 1400px;
-    padding: 1em 2em;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
     width: 100%;
+    height: 60px;
+    color: var(--text-secondary);
+    font-size: 0.8em;
+    max-width: 1400px;
+    /* padding: 1rem 2rem; */
+    text-align: center;
     a:hover {
       color: #666;
     }
+  }
+  .footer-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 </style>

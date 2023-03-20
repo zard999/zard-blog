@@ -11,21 +11,22 @@ export interface Props {
 }
 const { title, description, permalink, current } = Astro.props;
 ---
+
 <html lang="en">
-<head>
-  <BaseHead title={title} description={description} permalink={permalink} />
-</head>
-<body>
-  <div class="layout">
-    <Header current={current} />
+  <head>
+    <BaseHead title={title} description={description} permalink={permalink} />
+  </head>
+  <body>
+    <div class="layout">
+      <Header current={current} />
 
-    <main>
-      <slot />
-    </main>
+      <main>
+        <slot />
+      </main>
 
-    <Footer />
-  </div>
-</body>
+      <Footer />
+    </div>
+  </body>
 </html>
 
 <style>
@@ -40,11 +41,16 @@ const { title, description, permalink, current } = Astro.props;
     flex: 1;
     position: relative;
     margin: 0 auto;
-    max-width: 1400px;
-    padding: 1em 2em;
+    /* max-width: 1400px; */
+    padding-left: 2rem;
+    /* padding: 0 2em; */
     box-sizing: border-box;
     width: 100%;
     display: flex;
     flex-direction: column;
+    height: auto;
+    position: absolute;
+    top: 114px;
+    bottom: 60px;
   }
 </style>

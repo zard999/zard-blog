@@ -24,12 +24,21 @@ const permalink = Astro.site.href;
 
 <style>
   .home-container {
-    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    margin: auto;
+    overflow: scroll;
+
     display: flex;
-    flex: 1;
+    /* flex: 1; */
     justify-content: center;
-    margin: 2em 0;
-    min-height: 400px;
+    align-items: center;
+    /* margin: 2em 0; */
+    /* min-height: 400px; */
   }
 
   .home-copy {

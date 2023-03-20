@@ -1,17 +1,23 @@
 :root {
   --background-body: #fff;
   --text-main: #36393b;
+  --p-color: '#fff';
+  --blockquote-color: #6a737d;
+  --blockquote-background: #fff9f9;
   --text-secondary: #6b6f72;
-  --primary-color: #2BBC8A;
-  --font-family-serif: Merriweather, serif;
-  --font-family-sans: 'Fira Sans', sans-serif;
+  --h2-after: #efebe9;
+  --primary-color: rgb(239, 112, 96);
 }
 
 :root.theme-dark {
   --background-body: #202122;
-  --text-main: #C9CACC;
+  --text-main: #c9cacc;
+  --p-color: '#000';
+  --blockquote-color: #fff;
+  --blockquote-background: #1a1d1d;
   --text-secondary: #666;
-  --primary-color: #2BBC8A;
+  --h2-after: transparent;
+  --primary-color: #2bbc8a;
 }
 
 *,
@@ -22,119 +28,20 @@
 
 body {
   margin: 0;
-  font-family: var(--font-family-serif);
+  font-family: Optima-Regular, '微软黑体', Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 16px;
   line-height: 1.6;
   background-color: var(--background-body);
   color: var(--text-main);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family-sans);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0 0 0.5rem 0;
-}
-
-h1 {
-  font-family: var(--font-family-serif);
-  font-size: 2rem;
-  margin: 0 0 1rem 0;
-  color: var(--primary-color);
-}
-
-h2 {
-  margin: 1.6rem 0 0 0;
-  font-size: 1.5rem;
-  color: var(--primary-color);
-}
-
-h3 {
-  font-size: 1.3rem;
-}
-
-h4 {
-  font-size: 1.2rem;
-}
-
-h5 {
-  font-size: 1.1rem;
-}
-
-h6 {
-  font-size: 1rem;
-}
-
-p,
-ul,
-ol {
-  line-height: 1.75rem;
-  margin: 1.2rem 0;
-}
-
-ol,
-ul {
-  padding-left: 2rem;
-  -webkit-padding-start: 5%;
-  -webkit-padding-end: 5%;
-}
-
-li {
-  margin: 1rem 0;
-}
-
-li p {
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-a {
-  color: inherit;
-  transition: color linear 0.15s;
-}
-
-a:hover {
-  color: var(--primary-color);
-}
-
-p a {
-  text-decoration: none;
-  box-shadow: inset 0 -0.12rem 0 var(--primary-color);
-  -webkit-transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-}
-
-p a:hover {
-  box-shadow: inset 0 -1.5rem 0 var(--primary-color);
-  color: #fff;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-hr {
+html,
+body {
   padding: 0;
-  border: 0;
-  height: 10px;
-  margin: 40px auto;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='20' height='10'  viewBox='0 0 20 10' xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' clip-rule='evenodd' stroke-miterlimit='10'%3e%3cpath fill='none' d='M0 0h20v10H0z'/%3e%3cclipPath id='a'%3e%3cpath d='M0 0h20v10H0z'/%3e%3c/clipPath%3e%3cg clip-path='url(%23a)'%3e%3cpath d='M20 7.384c-4.999-.001-5-4.768-9.999-4.768C5 2.616 5 7.384 0 7.384' fill='none' stroke-width='3' stroke='%23548E9B'/%3e%3c/g%3e%3c/svg%3e");
-}
-
-code {
-  font-family: 'SF Mono', menlo, inconsolata, monospace;
-  font-size: calc(1rem - 2px);
-  color: #555;
-  padding: 0.2rem 0.4rem;
-  border-radius: 2px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 pre {
@@ -156,10 +63,6 @@ blockquote {
   padding-right: 2rem;
 }
 
-blockquote p {
-  padding-bottom: 6px;
-}
-
 blockquote footer {
   font-size: 1.1rem;
   text-align: right;
@@ -178,7 +81,6 @@ figure {
 
 table {
   border-collapse: collapse;
-  font-family: var(--font-family-sans);
   font-size: 1.125rem;
   margin: 2rem 0;
 }
@@ -193,9 +95,13 @@ td {
 }
 
 .container {
-  margin: 0 auto;
-  max-width: 42rem;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   width: 100%;
+  /* max-width: 42rem; */
+  /* margin: 0 auto; */
 }
 
 .content h1 {
@@ -259,11 +165,372 @@ input[name='theme-toggle'] {
   body {
     font-size: 14px;
   }
+}
 
-  p,
-  ul,
-  ol {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-  }
+/*段落*/
+p {
+  font-size: 16px;
+  padding-top: 4px;
+  /* 改动了 */
+  padding-bottom: 4px;
+  margin: 0;
+  /* line-height: 26px; */
+  line-height: 24px;
+  color: var(--p-color);
+}
+
+/*标题*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* 改动了之前是30 */
+  margin-top: 14px;
+  margin-bottom: 14px;
+  padding: 0px;
+  font-weight: 700;
+}
+h1 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+h2 {
+  font-size: 1.3rem;
+  border-bottom: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+h2 span {
+  display: inline-block;
+  font-weight: bold;
+  background: var(--primary-color);
+  color: #ffffff;
+  padding: 3px 10px 1px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  margin-right: 3px;
+}
+h2:after {
+  display: inline-block;
+  content: '';
+  vertical-align: bottom;
+  border-bottom: 36px solid var(--h2-after);
+  border-right: 20px solid transparent;
+}
+h3 {
+  font-size: 1.2rem;
+}
+h4 {
+  font-size: 1.1rem;
+}
+h5 {
+  font-size: 1rem;
+}
+h6 {
+  font-size: 1rem;
+}
+
+/*列表*/
+ul,
+ol {
+  /* margin-top: 8px; */
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 25px;
+  color: var(--p-color);
+}
+ul {
+  list-style-type: disc;
+}
+ul ul {
+  list-style-type: square;
+}
+ol {
+  list-style-type: decimal;
+}
+li section {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /* line-height: 26px; */
+  line-height: 24px;
+  text-align: left;
+  color: rgb(1, 1, 1); /* 只要是纯黑色微信编辑器就会把color这个属性吞掉。。。*/
+  font-weight: 500;
+}
+
+/*引用*/
+blockquote {
+  display: block;
+  font-size: 0.9em;
+  overflow: auto;
+  overflow-scrolling: touch;
+  border-left: 3px solid var(--primary-color);
+  color: var(--blockquote-color);
+  padding: 10px 10px 10px 20px;
+  margin-bottom: 20px;
+  /* margin-top: 20px; */
+  margin-top: 15px;
+  background: var(--blockquote-background);
+}
+blockquote p {
+  margin: 0px;
+  color: var(--p-color);
+  /* line-height: 26px; */
+  line-height: 24px;
+}
+
+/*链接*/
+a {
+  text-decoration: none;
+  word-wrap: break-word;
+  font-weight: bold;
+  color: inherit;
+  transition: color linear 0.15s;
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+p a {
+  text-decoration: none;
+  box-shadow: inset 0 -0.12rem 0 var(--primary-color);
+  -webkit-transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+p a:hover {
+  box-shadow: inset 0 -1.5rem 0 var(--primary-color);
+  color: #fff;
+}
+
+/*行内代码*/
+p code,
+li code {
+  font-size: 14px;
+  word-wrap: break-word;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin: 0 2px;
+  color: rgb(239, 112, 96);
+  background-color: rgba(27, 31, 35, 0.05);
+  font-family: Operator Mono, Consolas, Monaco, Menlo, monospace;
+  word-break: break-all;
+}
+
+/*图片*/
+img {
+  /* display: block; */
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+span img {
+  display: inline-block;
+  border-right: 0px;
+  border-left: 0px;
+}
+
+/*表格*/
+table {
+  display: table;
+  text-align: left;
+}
+tbody {
+  border: 0;
+}
+table tr {
+  border: 0;
+  border-top: 1px solid #ccc;
+  background-color: white;
+}
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+table tr th,
+table tr td {
+  font-size: 16px;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  text-align: left;
+}
+table tr th {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+/* 行内代码 */
+span code,
+li code {
+  color: rgb(239, 112, 96);
+}
+
+/* 脚注上标 */
+.md-footnote {
+  font-weight: bold;
+  color: rgb(239, 112, 96);
+}
+.md-footnote > .md-text:before {
+  content: '[';
+}
+.md-footnote > .md-text:after {
+  content: ']';
+}
+
+/* 脚注 */
+.md-def-name {
+  padding-right: 1.8ch;
+}
+.md-def-name:before {
+  content: '[';
+  color: #000;
+}
+.md-def-name:after {
+  color: #000;
+}
+
+/* 代码块主题 */
+.md-fences:before {
+  content: ' ';
+  display: block;
+  width: 100%;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-color: #282c34;
+  margin-bottom: -7px;
+  border-radius: 5px;
+  background-position: 10px 10px;
+}
+.cm-s-inner.CodeMirror {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #292d3e;
+  color: #a6accd;
+  font-family: JetBrains Mono, '微软雅黑';
+  border-radius: 4px;
+}
+.CodeMirror-lines {
+  padding-left: 4px;
+}
+.cm-s-inner .cm-keyword {
+  color: #c792ea !important;
+}
+.cm-s-inner .cm-operator {
+  color: #89ddff !important;
+}
+.cm-s-inner .cm-variable-2 {
+  color: #eeffff !important;
+}
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #f07178 !important;
+}
+.cm-s-inner .cm-builtin {
+  color: #ffcb6b !important;
+}
+.cm-s-inner .cm-atom {
+  color: #f78c6c !important;
+}
+.cm-s-inner .cm-number {
+  color: #ff5370 !important;
+}
+.cm-s-inner .cm-def {
+  color: #82aaff !important;
+}
+.cm-s-inner .cm-string {
+  color: #c3e88d !important;
+}
+.cm-s-inner .cm-string-2 {
+  color: #f07178 !important;
+}
+.cm-s-inner .cm-comment {
+  color: #93e900 !important;
+}
+.cm-s-inner .cm-variable {
+  color: #f07178 !important;
+}
+.cm-s-inner .cm-tag {
+  color: #ff5370 !important;
+}
+.cm-s-inner .cm-meta {
+  color: #ffcb6b !important;
+}
+.cm-s-inner .cm-attribute {
+  color: #c792ea !important;
+}
+.cm-s-inner .cm-property {
+  color: #c792ea !important;
+}
+.cm-s-inner .cm-qualifier {
+  color: #decb6b !important;
+}
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #decb6b !important;
+}
+.cm-s-inner .cm-error {
+  color: rgba(255, 255, 255, 1) !important;
+  background-color: #ff5370 !important;
+}
+.cm-s-inner .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid rgb(239, 112, 96);
+  z-index: 3;
+}
+
+.cm-s-inner div.CodeMirror-selected {
+  background: rgba(167, 178, 189, 0.2) !important;
+}
+
+.cm-s-inner.CodeMirror-focused div.CodeMirror-selected {
+  background: rgba(167, 178, 189, 0.2) !important;
+}
+
+.cm-s-inner .CodeMirror-selected,
+.cm-s-inner .CodeMirror-selectedtext {
+  background-color: rgba(167, 178, 189, 0) !important;
+}
+
+.cm-s-inner .CodeMirror-line::-moz-selection,
+.cm-s-inner .CodeMirror-line > span::-moz-selection,
+.cm-s-inner .CodeMirror-line > span > span::-moz-selection {
+  background-color: rgba(167, 178, 189, 0.2);
+}
+
+.cm-s-inner .CodeMirror-line::selection,
+.cm-s-inner .CodeMirror-line > span::selection,
+.cm-s-inner .CodeMirror-line > span > span::selection {
+  background-color: rgba(167, 178, 189, 0.2);
+}
+mark {
+  background: rgb(255 255 255);
+  color: red;
+  font-weight: bold;
+}
+
+/* 滚动条的样式 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* 滚动条上拇指(Scrollbar thumb)，滑块的颜色 */
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+/* 鼠标移动到滚动条上拇指(Scrollbar thumb)时，滑块的颜色 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color);
+}
+
+/* 隐藏滚动条右下角的正方形（针对 Webkit浏览器） */
+::-webkit-scrollbar-corner {
+    width: 0;
+    height: 0;
+    background-color: transparent;
 }

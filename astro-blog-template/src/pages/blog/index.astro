@@ -9,8 +9,8 @@ const permalink = `${Astro.site.href}blog`;
 // 本地获取
 // let allPosts = await Astro.glob('../../data/blog-posts/*.md');
 // 接口获取
-const fetchPosts = await fetch('http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
-const fetchCategories = await fetch('http://42.192.151.130:9003/api/categories').then(res => res.json());
+const fetchPosts = await fetch('https://blog.admin.pointfree.cn/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
+const fetchCategories = await fetch('https://blog.admin.pointfree.cn/api/categories').then(res => res.json());
 // debugger;
 // 按照年份分类fetchPosts
 const postsByYear = {};

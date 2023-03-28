@@ -38,6 +38,9 @@ const socialUrl = Astro.site.href + 'assets/social.png';
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={socialUrl} />
 
+<!-- 解决https中http图片无法加载 -->
+<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
+
 <!-- This is intentionally inlined to avoid FOUC -->
 <script>
   const root = document.documentElement;

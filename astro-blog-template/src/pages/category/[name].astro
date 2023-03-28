@@ -4,13 +4,13 @@ import moment from 'moment';
 import type { APIContext } from 'astro';
 
 export async function getStaticPaths() {
-  const fetchCategories = await fetch('http://42.192.151.130:9003/api/categories').then(res => res.json());
+  const fetchCategories = await fetch('https://blog.admin.pointfree.cn/api/categories').then(res => res.json());
   // debugger;
   // 这里 return 的东西，可以在下面接收到
   const resArr = await Promise.all(
     fetchCategories.data.map(async category => {
       // 网络获取
-      const fetchPosts = await fetch(`http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover&filters[categories][name][$contains]=${category.attributes.name}`).then(res => res.json());
+      const fetchPosts = await fetch(`https://blog.admin.pointfree.cn/api/posts?populate[0]=categories&populate[1]=cover&filters[categories][name][$contains]=${category.attributes.name}`).then(res => res.json());
       console.log('params', fetchPosts);
       return {
         params: { name: category.attributes.name },

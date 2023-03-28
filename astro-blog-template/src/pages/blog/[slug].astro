@@ -8,7 +8,7 @@ export async function getStaticPaths() {
   // 本地获取
   // const posts = await Astro.glob('../../data/blog-posts/*.md');
   // 网络获取
-  const fetchPosts = await fetch('http://42.192.151.130:9003/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
+  const fetchPosts = await fetch('https://blog.admin.pointfree.cn/api/posts?populate[0]=categories&populate[1]=cover').then(res => res.json());
   // debugger;
   // 这里 return 的东西，可以在下面接收到
   return fetchPosts.data.map(post => ({
@@ -88,7 +88,7 @@ console.log('result', navRes);
           </div>
         </div>
         <div class="header-image">
-          <div style={{ width: '80%', height: '30em', background: `url(http://42.192.151.130:9003${cover.data[0].attributes.url})`, 'background-size': '100% 100%', 'background-repeat': 'no-repeat' }}></div>
+          <div style={{ width: '80%', height: '30em', background: `url(https://blog.admin.pointfree.cn${cover.data[0].attributes.url})`, 'background-size': '100% 100%', 'background-repeat': 'no-repeat' }}></div>
         </div>
       </header>
       <article class="content">

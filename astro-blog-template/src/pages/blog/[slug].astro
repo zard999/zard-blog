@@ -25,8 +25,9 @@ let reg = /(#{1,6})\s(.*)/g;
 // let reg = /(?<!`)(#(?:#|[^#\n])*)/;
 // 匹配到的所有标题
 let titleArr = content.match(reg);
+console.log('2222', titleArr);
 // 将匹配结果中的#替换成对应的html标签
-let replacedTitleArr = titleArr.map(item => {
+let replacedTitleArr = titleArr ? titleArr.map(item => {
   return item.replace(reg, (match, p0, p1) => {
     let fontSize = '',
       marginLeft = '';
@@ -60,7 +61,7 @@ let replacedTitleArr = titleArr.map(item => {
     if (anchorPointContent.indexOf('</span>') !== -1) anchorPointContent = anchorPointContent.replace('</span>', '').replace(/<span(([\s\S])*?)>/g, ''); // 过滤其他标签
     return `<a href="#${anchorPointContent.toLowerCase().replace(/[\s]/g, '-').replace(/[:：]/g, '')}" style="display: block;width: 215px;font-size:${fontSize};overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding:0 20px;margin-left:${marginLeft}"><div style="width: 100%">${p1}</div></a>`;
   });
-});
+}) : [];
 const navRes = await markdown(replacedTitleArr.join('\n'));
 console.log('result', navRes);
 ---

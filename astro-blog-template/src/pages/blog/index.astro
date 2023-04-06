@@ -15,14 +15,14 @@ const fetchCategories = await fetch('https://blog.admin.pointfree.cn/api/categor
 // 按照年份分类fetchPosts
 const postsByYear = {};
 const postsByYearArr = [];
-fetchPosts.data.forEach(post => {
+fetchPosts.data.sort((a, b) => new Date(b.attributes.publishedAt).valueOf() - new Date(a.attributes.publishedAt).valueOf()).forEach(post => {
   const year = moment(post.attributes.publishedAt).format('YYYY');
   if (!postsByYear[year]) {
     postsByYear[year] = [];
     postsByYearArr.push(year);
   }
   postsByYear[year].push(post);
-});
+})
 console.log('postsByYear', postsByYear, postsByYearArr);
 // allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
 ---

@@ -18,6 +18,7 @@
   "dependencies": {
     "@astropub/md": "^0.1.5",
     "moment": "^2.29.4",
-    "reading-time": "^1.5.0"
+    "reading-time": "^1.5.0",
+    "typed.js": "^2.0.16"
   }
 }
